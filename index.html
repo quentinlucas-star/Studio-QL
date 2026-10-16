@@ -233,15 +233,20 @@ button{font:inherit}
    ========================================================== */
 .sec{padding:clamp(80px,12vw,144px) 0}
 .panel{background:var(--carbon);border-radius:28px;padding:clamp(20px,5vw,64px)}
-.demo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:clamp(32px,5vw,56px)}
-@media(max-width:1000px){.demo-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:640px){.demo-grid{grid-template-columns:1fr}}
-.demo{background:#000;border-radius:28px;height:400px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;padding:24px;user-select:none;-webkit-user-select:none}
+.demo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:clamp(32px,5vw,56px)}
+@media(max-width:760px){.demo-grid{grid-template-columns:1fr}}
+.demo{background:#000;border-radius:28px;min-height:440px;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:20px;padding:24px}
 .demo-top,.demo-hint{position:relative;z-index:4;pointer-events:none}
 .demo-n{font-size:12px;line-height:16px;color:var(--ash)}
 .demo-t{font-family:var(--f-disp);font-size:21px;line-height:1.19;font-weight:600;letter-spacing:.011em;margin-top:4px}
 .demo-hint{font-size:12px;color:var(--ash);display:flex;align-items:center;gap:6px}
+.demo-body{flex:1;display:flex;flex-direction:column;justify-content:center}
+
+.demo.fx{justify-content:space-between;user-select:none;-webkit-user-select:none}
 .demo-stage{position:absolute;inset:0;display:grid;place-items:center;padding-top:24px}
+.demo-group{margin-top:clamp(40px,6vw,64px);font-family:var(--f-disp);font-size:21px;line-height:1.19;font-weight:600;letter-spacing:.011em}
+.demo-group span{color:var(--ash);font-weight:400}
+.demo-group + .demo-grid{margin-top:20px}
 
 /* tilt */
 .tilt-float{animation:float 6s ease-in-out infinite}
@@ -255,12 +260,6 @@ button{font:inherit}
 .tc-name b{display:block;font-family:var(--f-disp);font-size:19px;font-weight:600}
 .tc-name span{font-size:12px;color:var(--ash)}
 .tc-chip{position:absolute;right:22px;top:22px;font-size:10px;letter-spacing:.08em;color:var(--ash);transform:translateZ(30px)}
-
-/* magnetic */
-.mag{width:150px;height:150px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:14px;border:0;cursor:pointer;transition:transform .7s var(--ease)}
-.mag span{display:block;transition:transform .7s var(--ease)}
-.mag.moving,.mag.moving span{transition:transform .18s linear}
-.mag-ring{position:absolute;width:300px;height:300px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--carbon);pointer-events:none}
 
 /* scramble */
 .scr-box{text-align:center;padding:0 16px}
@@ -278,13 +277,61 @@ button{font:inherit}
 .spot-soft{background:radial-gradient(260px circle at var(--x,50%) var(--y,50%),rgba(41,151,255,.14),transparent 70%)}
 .spot-txt{position:relative;z-index:2;font-family:var(--f-disp);font-size:28px;font-weight:600;line-height:1;letter-spacing:.007em;text-align:center}
 
-/* goo */
-.goo{position:absolute;inset:0;filter:url(#goo)}
-.blob{position:absolute;left:0;top:0;width:96px;height:96px;margin:-48px 0 0 -48px;border-radius:50%;background:var(--link);will-change:transform}
-.blob:nth-child(1){width:120px;height:120px;margin:-60px 0 0 -60px;background:var(--porcelain)}
-.blob:nth-child(2){background:var(--blue)}
-.blob:nth-child(4){width:70px;height:70px;margin:-35px 0 0 -35px;background:#5ac8fa}
-.blob:nth-child(5){width:60px;height:60px;margin:-30px 0 0 -30px}
+/* galerie à glisser */
+.gal-rail{display:flex;gap:12px;margin:0 -24px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain;cursor:grab;user-select:none;-webkit-user-select:none;outline:none}
+.gal-rail::-webkit-scrollbar{display:none}
+.gal-rail::before,.gal-rail::after{content:"";flex:0 0 28px}
+.gal-rail.drag{scroll-snap-type:none;cursor:grabbing}
+.gal-s{flex:0 0 calc(100% - 80px);margin:0;aspect-ratio:16/10;border-radius:20px;scroll-snap-align:center;position:relative;overflow:hidden;background:var(--g)}
+.gal-s::before{content:"";position:absolute;width:38%;aspect-ratio:1;right:12%;top:14%;border-radius:50%;background:rgba(255,255,255,.35)}
+.gal-s::after{content:"";position:absolute;left:-10%;right:-10%;bottom:-30%;height:65%;border-radius:50% 50% 0 0;background:rgba(0,0,0,.14)}
+.gal-s figcaption{position:absolute;left:12px;bottom:12px;z-index:1;font-size:12px;line-height:16px;color:#1d1d1f;background:rgba(255,255,255,.75);padding:4px 10px;border-radius:980px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.gal-ctrl{display:flex;align-items:center;justify-content:space-between;margin-top:16px}
+.gal-btn{width:36px;height:36px;border-radius:50%;border:0;background:transparent;box-shadow:inset 0 0 0 1px var(--steel);color:var(--porcelain);display:grid;place-items:center;cursor:pointer;transition:opacity .3s,box-shadow .3s}
+.gal-btn:hover{box-shadow:inset 0 0 0 1px var(--porcelain)}
+.gal-btn:disabled{opacity:.3;cursor:default;box-shadow:inset 0 0 0 1px var(--steel)}
+.gal-dots{display:flex;gap:6px}
+.gal-dots i{width:6px;height:6px;border-radius:3px;background:var(--steel);transition:width .4s var(--ease),background .4s}
+.gal-dots i.on{width:18px;background:var(--porcelain)}
+
+/* avant / après */
+.ba{position:relative;aspect-ratio:16/10;border-radius:20px;overflow:hidden;touch-action:pan-y;cursor:ew-resize;user-select:none;-webkit-user-select:none;--p:50%;outline:none}
+.ba:focus-visible{box-shadow:0 0 0 2px var(--blue)}
+.ba-img{position:absolute;inset:0;background:radial-gradient(circle at 72% 30%,#fff3c4 0 7%,rgba(255,243,196,.35) 7.5% 13%,transparent 14%),radial-gradient(130% 55% at 25% 105%,#2e8b57 0 60%,transparent 61%),radial-gradient(110% 60% at 90% 108%,#1d6b43 0 60%,transparent 61%),linear-gradient(#3d8bfd,#a8d4ff 75%)}
+.ba-before{filter:grayscale(.85) brightness(.72) contrast(.8) blur(1.5px);clip-path:inset(0 calc(100% - var(--p)) 0 0)}
+.ba-tag{position:absolute;top:12px;font-size:12px;line-height:16px;padding:4px 10px;border-radius:980px;background:rgba(0,0,0,.45);color:#fff;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.ba-tag.l{left:12px}.ba-tag.r{right:12px}
+.ba-line{position:absolute;top:0;bottom:0;left:var(--p);width:2px;margin-left:-1px;background:#fff}
+.ba-knob{position:absolute;top:50%;left:50%;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;background:#fff;color:#1d1d1f;display:grid;place-items:center}
+
+/* FAQ */
+.faq{border-top:1px solid var(--steel)}
+.faq-i{border-bottom:1px solid var(--steel)}
+.faq-q{width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;background:none;border:0;color:var(--porcelain);font:inherit;font-size:17px;font-weight:600;line-height:1.3;text-align:left;padding:16px 0;cursor:pointer}
+.faq-q i{flex:0 0 14px;height:14px;position:relative;transition:transform .45s var(--ease)}
+.faq-q i::before,.faq-q i::after{content:"";position:absolute;left:0;right:0;top:50%;height:1.5px;margin-top:-.75px;background:var(--ash);border-radius:1px}
+.faq-q i::after{transform:rotate(90deg)}
+.faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s var(--ease)}
+.faq-a>div{overflow:hidden;visibility:hidden;transition:visibility 0s .45s}
+.faq-a p{font-size:15px;line-height:1.45;color:var(--ash);padding-bottom:16px}
+.faq-i.open .faq-a{grid-template-rows:1fr}
+.faq-i.open .faq-a>div{visibility:visible;transition-delay:0s}
+.faq-i.open .faq-q i{transform:rotate(45deg)}
+
+/* formulaire intelligent */
+.sf .field{margin-bottom:6px}
+.sf .inp.ok{border-color:#30d158;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%2330d158' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 20px center}
+.sf .inp.ok:focus{outline-color:#30d158}
+.sf .inp.bad,.sf .inp.bad:focus{border-color:#ff453a;outline-color:#ff453a}
+.sf .inp.shake{animation:shake .4s}
+@keyframes shake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.sf-msg{min-height:20px;font-size:13px;line-height:20px;margin:0 0 14px 24px;color:#30d158}
+.sf-msg.bad{color:#ff6961}
+.sf-btn{width:100%;min-height:46px;transition:background .3s}
+.sf-btn .spin{display:none;width:16px;height:16px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
+.sf-btn.sending .spin{display:block}
+.sf-btn.done,.sf-btn.done:hover{background:#248a3d}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 /* ==========================================================
    PROCESS — scroll horizontal
@@ -370,15 +417,12 @@ footer{background:#000;color:var(--ash);font-size:12px;line-height:16px;padding:
   .hero-title .w>span,.fade,.orb-wrap{animation:none;transform:none;filter:none;opacity:1}
   .mq-track,.waves svg,.morph,.atom-in i,.tilt-float,.tile.in .load i{animation:none}
   .tile .load i{width:100%}
+  .faq-a,.faq-q i,.gal-dots i{transition:none}
 }
 </style>
 </head>
 <body>
 
-<!-- Filtre SVG "goo" (démo 06) -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <filter id="goo"><feGaussianBlur in="SourceGraphic" stdDeviation="14" result="b"/><feColorMatrix in="b" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 24 -10"/></filter>
-</svg>
 
 <!-- ============ NAVIGATION ============ -->
 <header class="gnav">
@@ -543,40 +587,75 @@ footer{background:#000;color:var(--ash);font-size:12px;line-height:16px;padding:
     <div class="panel">
       <div class="center rv">
         <p class="eyebrow">Démos interactives</p>
-        <h2 class="h-xl">Touchez. Survolez.<br>Tout réagit.</h2>
-        <p class="sub">Six effets que je peux intégrer à votre site. Ils fonctionnent ici, en direct.</p>
+        <h2 class="h-xl">Utile.<br>Et mémorable.</h2>
+        <p class="sub">D'un côté, ce qui sert à vos visiteurs au quotidien. De l'autre, ce qui leur reste en tête. Tout fonctionne ici, en direct.</p>
       </div>
+      <p class="demo-group rv">Les essentiels <span>· ce qui sert tous les jours</span></p>
       <div class="demo-grid">
-        <div class="demo rv" id="d-tilt">
-          <div class="demo-top"><p class="demo-n">Démo 01</p><p class="demo-t">Carte en relief 3D</p></div>
+        <div class="demo rv" id="d-gal">
+          <div class="demo-top"><p class="demo-n">Démo 01</p><p class="demo-t">Galerie à glisser</p></div>
+          <div class="demo-body">
+            <div class="gal-rail" id="galRail" tabindex="0" role="region" aria-label="Galerie d'exemple"><figure class="gal-s" style="--g:linear-gradient(160deg,#ffb88c,#de6262)"><figcaption>1 / 5</figcaption></figure><figure class="gal-s" style="--g:linear-gradient(160deg,#a1c4fd,#c2e9fb)"><figcaption>2 / 5</figcaption></figure><figure class="gal-s" style="--g:linear-gradient(160deg,#d4fc79,#96e6a1)"><figcaption>3 / 5</figcaption></figure><figure class="gal-s" style="--g:linear-gradient(160deg,#fbc2eb,#a6c1ee)"><figcaption>4 / 5</figcaption></figure><figure class="gal-s" style="--g:linear-gradient(160deg,#f6d365,#fda085)"><figcaption>5 / 5</figcaption></figure></div>
+            <div class="gal-ctrl"><button class="gal-btn" type="button" aria-label="Image précédente"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button><div class="gal-dots" id="galDots"></div><button class="gal-btn" type="button" aria-label="Image suivante"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button></div>
+          </div>
+          <p class="demo-hint">Glissez, ou utilisez les flèches</p>
+        </div>
+        <div class="demo rv" id="d-ba" style="--d:.08s">
+          <div class="demo-top"><p class="demo-n">Démo 02</p><p class="demo-t">Avant / après</p></div>
+          <div class="demo-body">
+            <div class="ba" id="ba" tabindex="0" role="slider" aria-label="Comparer avant et après" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+              <div class="ba-img"></div><div class="ba-img ba-before"></div>
+              <span class="ba-tag l">Avant</span><span class="ba-tag r">Après</span>
+              <div class="ba-line"><span class="ba-knob"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 7 21 12 16 17"/><polyline points="8 7 3 12 8 17"/></svg></span></div>
+            </div>
+          </div>
+          <p class="demo-hint">Faites glisser la poignée</p>
+        </div>
+        <div class="demo rv" id="d-faq">
+          <div class="demo-top"><p class="demo-n">Démo 03</p><p class="demo-t">Questions fréquentes</p></div>
+          <div class="demo-body">
+            <div class="faq">
+              <div class="faq-i"><button class="faq-q" type="button" aria-expanded="false">Combien coûte un site ?<i aria-hidden="true"></i></button><div class="faq-a"><div><p>Chaque projet est différent, donc chaque prix aussi. Décrivez votre besoin dans le formulaire de contact et je vous envoie un devis adapté.</p></div></div></div>
+              <div class="faq-i"><button class="faq-q" type="button" aria-expanded="false">Mon site marchera-t-il sur téléphone ?<i aria-hidden="true"></i></button><div class="faq-a"><div><p>Oui. Chaque site s'adapte à toutes les tailles d'écran, du téléphone à l'ordinateur.</p></div></div></div>
+              <div class="faq-i"><button class="faq-q" type="button" aria-expanded="false">Je ne sais pas encore ce qu'il me faut.<i aria-hidden="true"></i></button><div class="faq-a"><div><p>Aucun souci : choisissez « Je ne sais pas encore » dans le formulaire, et on en parle ensemble.</p></div></div></div>
+            </div>
+          </div>
+          <p class="demo-hint">Ouvrez une question</p>
+        </div>
+        <div class="demo rv" id="d-sf" style="--d:.08s">
+          <div class="demo-top"><p class="demo-n">Démo 04</p><p class="demo-t">Formulaire qui guide</p></div>
+          <div class="demo-body">
+            <form class="sf" id="sf" novalidate>
+              <label class="field"><span>Votre email</span><input class="inp" type="email" inputmode="email" autocomplete="off" placeholder="camille@mail.fr"></label>
+              <p class="sf-msg" aria-live="polite"></p>
+              <button class="pill pill-blue sf-btn" type="submit"><i class="spin" aria-hidden="true"></i><span>Envoyer</span></button>
+            </form>
+          </div>
+          <p class="demo-hint">Démo : rien n'est envoyé</p>
+        </div>
+      </div>
+      <p class="demo-group rv">Les effets qui marquent <span>· en 3D et en mouvement</span></p>
+      <div class="demo-grid">
+        <div class="demo fx rv" id="d-tilt">
+          <div class="demo-top"><p class="demo-n">Démo 05</p><p class="demo-t">Carte en relief 3D</p></div>
           <div class="demo-stage"><div class="tilt-float"><div class="tilt-wrap"><div class="tilt-card"><span class="tc-chip">3D</span><div class="tc-orb"></div><div class="tc-name"><b data-cfg="brand">Studio QL</b><span>Profondeur &amp; reflet dynamique</span></div></div></div></div></div>
-          <p class="demo-hint" data-touch="Glissez le doigt sur la carte"><span class="hint-dev">Survolez</span> la carte</p>
+          <p class="demo-hint" data-touch="Glissez le doigt sur la carte">Survolez la carte</p>
         </div>
-        <div class="demo rv" id="d-mag" style="--d:.08s">
-          <div class="demo-top"><p class="demo-n">Démo 02</p><p class="demo-t">Bouton magnétique</p></div>
-          <div class="demo-stage"><div class="mag-ring"></div><a class="mag pill-blue" href="#contact" id="magBtn"><span>Approchez</span></a></div>
-          <p class="demo-hint" data-touch="Le bouton suit votre doigt">Le bouton est attiré par le curseur</p>
-        </div>
-        <div class="demo rv" id="d-scr" style="--d:.16s">
-          <div class="demo-top"><p class="demo-n">Démo 03</p><p class="demo-t">Texte décodé</p></div>
+        <div class="demo fx rv" id="d-scr" style="--d:.08s">
+          <div class="demo-top"><p class="demo-n">Démo 06</p><p class="demo-t">Texte décodé</p></div>
           <div class="demo-stage"><div class="scr-box"><small>Votre site sera</small><div class="scr" id="scr">Mémorable</div></div></div>
-          <p class="demo-hint"><span class="hint-dev">Survolez</span> pour changer le mot</p>
+          <p class="demo-hint" data-touch="Touchez pour changer le mot">Survolez pour changer le mot</p>
         </div>
-        <div class="demo rv" id="d-part">
+        <div class="demo fx rv" id="d-part">
           <canvas aria-hidden="true"></canvas>
-          <div class="demo-top"><p class="demo-n">Démo 04</p><p class="demo-t">Particules réactives</p></div>
+          <div class="demo-top"><p class="demo-n">Démo 07</p><p class="demo-t">Particules réactives</p></div>
           <p class="demo-hint" data-touch="Glissez le doigt · touchez pour disperser">Passez dessus · cliquez pour disperser</p>
         </div>
-        <div class="demo rv" id="d-spot" style="--d:.08s">
+        <div class="demo fx rv" id="d-spot" style="--d:.08s">
           <div class="spot-soft"></div><div class="spot-grid"></div><div class="spot-glow"></div>
-          <div class="demo-top"><p class="demo-n">Démo 05</p><p class="demo-t" data-touch="Lumière qui suit le doigt">Lumière qui suit le curseur</p></div>
+          <div class="demo-top"><p class="demo-n">Démo 08</p><p class="demo-t" data-touch="Lumière qui suit le doigt">Lumière qui suit le curseur</p></div>
           <div class="demo-stage"><p class="spot-txt">Éclairez<br>la grille.</p></div>
           <p class="demo-hint" data-touch="La lumière suit votre doigt">La lumière suit votre pointeur</p>
-        </div>
-        <div class="demo rv" id="d-goo" style="--d:.16s">
-          <div class="goo"><span class="blob"></span><span class="blob"></span><span class="blob"></span><span class="blob"></span><span class="blob"></span></div>
-          <div class="demo-top"><p class="demo-n">Démo 06</p><p class="demo-t">Formes liquides</p></div>
-          <p class="demo-hint" data-touch="Glissez le doigt pour attraper la goutte blanche">Attrapez la goutte blanche</p>
         </div>
       </div>
     </div>
@@ -717,7 +796,6 @@ $$('[data-cfg]').forEach(el => { const v = get(el.dataset.cfg); if (v != null) e
 document.title = CONFIG.brand + ' — Sites internet sur-mesure';
 $('#year').textContent = new Date().getFullYear();
 if (CONFIG.photo) $('#portrait').insertAdjacentHTML('afterbegin', `<img src="${CONFIG.photo}" alt="Portrait de ${CONFIG.prenom} ${CONFIG.nom}">`), $('#portrait .ini').remove();
-if (TOUCH) $$('.hint-dev').forEach(el => el.textContent = 'Touchez');
 
 /* ---------- Apparitions ---------- */
 const io = new IntersectionObserver(es => es.forEach(e => {
@@ -941,8 +1019,96 @@ const typer = (() => {
 })();
 
 /* ==========================================================
-   DÉMOS
+   DÉMOS — effets courants sur les vrais sites
    ========================================================== */
+
+/* 01 — galerie : défilement natif + scroll-snap (le doigt et le pavé tactile marchent seuls),
+   flèches, points, clavier, et glisser à la souris */
+(() => {
+  const rail = $('#galRail'), slides = $$('.gal-s', rail), [prev, next] = $$('.gal-btn', $('#d-gal'));
+  $('#galDots').innerHTML = slides.map(() => '<i></i>').join('');
+  const dots = $$('#galDots i');
+  const step = () => slides[1].offsetLeft - slides[0].offsetLeft;
+  const cur = () => Math.round(rail.scrollLeft / step());
+  const go = i => rail.scrollTo({ left: clamp(i, 0, slides.length - 1) * step(), behavior: RM ? 'auto' : 'smooth' });
+  const sync = () => { const i = cur(); dots.forEach((d, k) => d.classList.toggle('on', k === i)); prev.disabled = i === 0; next.disabled = i === slides.length - 1; };
+  rail.addEventListener('scroll', sync, { passive: true }); sync();
+  prev.addEventListener('click', () => go(cur() - 1));
+  next.addEventListener('click', () => go(cur() + 1));
+  rail.addEventListener('keydown', e => { if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); go(cur() + (e.key === 'ArrowRight' ? 1 : -1)); } });
+  let drag = false, x0 = 0, s0 = 0;
+  rail.addEventListener('pointerdown', e => {
+    if (e.pointerType !== 'mouse' || e.button) return;
+    drag = true; x0 = e.clientX; s0 = rail.scrollLeft; rail.classList.add('drag'); rail.setPointerCapture(e.pointerId);
+  });
+  rail.addEventListener('pointermove', e => { if (drag) rail.scrollLeft = s0 - (e.clientX - x0); });
+  const end = e => {
+    if (!drag) return; drag = false;
+    const dx = e.clientX - x0, i0 = Math.round(s0 / step());
+    rail.classList.remove('drag');
+    go(dx < -40 ? i0 + 1 : dx > 40 ? i0 - 1 : i0);
+  };
+  rail.addEventListener('pointerup', end);
+  rail.addEventListener('pointercancel', end);
+})();
+
+/* 02 — avant / après : touch-action pan-y laisse le scroll vertical à la page,
+   le glissé horizontal déplace la poignée */
+(() => {
+  const ba = $('#ba');
+  let p = 50, on = false;
+  const set = v => { p = clamp(v, 0, 100); ba.style.setProperty('--p', p + '%'); ba.setAttribute('aria-valuenow', Math.round(p)); };
+  const at = x => { const r = ba.getBoundingClientRect(); set((x - r.left) / r.width * 100); };
+  ba.addEventListener('pointerdown', e => { on = true; ba.setPointerCapture(e.pointerId); if (e.pointerType === 'mouse') at(e.clientX); });
+  ba.addEventListener('pointermove', e => { if (on) at(e.clientX); });
+  ba.addEventListener('pointerup', () => on = false);
+  ba.addEventListener('pointercancel', () => on = false);
+  ba.addEventListener('keydown', e => {
+    const d = { ArrowLeft: -5, ArrowRight: 5, Home: -100, End: 100 }[e.key];
+    if (d) { e.preventDefault(); set(p + d); }
+  });
+})();
+
+/* 03 — FAQ : une seule réponse ouverte à la fois, hauteur animée en CSS (grid-template-rows) */
+$$('.faq-q').forEach(q => q.addEventListener('click', () => {
+  const it = q.parentElement, open = !it.classList.contains('open');
+  $$('.faq-i.open', it.parentElement).forEach(o => { o.classList.remove('open'); $('.faq-q', o).setAttribute('aria-expanded', 'false'); });
+  it.classList.toggle('open', open); q.setAttribute('aria-expanded', open);
+}));
+
+/* 04 — formulaire qui guide : message précis pendant la saisie, puis états du bouton.
+   Démo uniquement : rien n'est envoyé. */
+(() => {
+  const f = $('#sf'), inp = $('input', f), msg = $('.sf-msg', f), btn = $('button', f), lab = $('span', btn);
+  let touched = false, busy = false;
+  const check = v => !v ? 'Indiquez votre adresse email.'
+    : !v.includes('@') ? 'Il manque le @.'
+    : !/^[^\s@]+@[^\s@]+$/.test(v) ? 'Adresse incomplète.'
+    : !/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(v) ? 'Il manque la fin, par exemple .fr ou .com'
+    : '';
+  const show = () => {
+    const err = check(inp.value.trim());
+    inp.classList.toggle('bad', !!err); inp.classList.toggle('ok', !err);
+    msg.textContent = err || 'Adresse valide'; msg.classList.toggle('bad', !!err);
+    return !err;
+  };
+  // Les erreurs n'apparaissent qu'après une première sortie du champ, pas dès la première lettre
+  inp.addEventListener('input', () => { if (touched || !check(inp.value.trim())) show(); });
+  inp.addEventListener('blur', () => { if (inp.value) { touched = true; show(); } });
+  f.addEventListener('submit', e => {
+    e.preventDefault(); if (busy) return;
+    touched = true;
+    if (!show()) { inp.classList.remove('shake'); void inp.offsetWidth; inp.classList.add('shake'); inp.focus(); return; }
+    busy = true; btn.classList.add('sending'); lab.textContent = 'Envoi…';
+    setTimeout(() => { btn.classList.replace('sending', 'done'); lab.textContent = 'Envoyé ✓'; }, 1200);
+    setTimeout(() => {
+      btn.classList.remove('done'); lab.textContent = 'Envoyer';
+      f.reset(); inp.classList.remove('ok', 'bad'); msg.textContent = ''; touched = busy = false;
+    }, 3600);
+  });
+})();
+
+/* Effets 3D : une boucle commune (demoTicks), calculs coupés hors écran */
 const demoTicks = [];
 
 /* Suivi du pointeur commun aux démos : souris, et doigt sur mobile.
@@ -961,7 +1127,7 @@ const follow = (tile, move, leave) => {
 const GHOST = TOUCH && !RM;
 if (TOUCH) $$('[data-touch]').forEach(el => el.textContent = el.dataset.touch);
 
-/* 01 — carte 3D */
+/* 05 — carte 3D */
 (() => {
   const tile = $('#d-tilt'), card = $('.tilt-card', tile);
   let active = false;
@@ -982,26 +1148,7 @@ if (TOUCH) $$('[data-touch]').forEach(el => el.textContent = el.dataset.touch);
   });
 })();
 
-/* 02 — bouton magnétique */
-(() => {
-  const tile = $('#d-mag'), b = $('#magBtn'), s = $('span', b);
-  let active = false;
-  vio.observe(tile);
-  const pull = (dx, dy) => { b.classList.add('moving'); b.style.transform = `translate(${dx * .42}px,${dy * .42}px)`; s.style.transform = `translate(${dx * .16}px,${dy * .16}px)`; };
-  const reset = () => { active = false; b.classList.remove('moving'); b.style.transform = ''; s.style.transform = ''; };
-  follow(tile, (cx, cy) => {
-    const r = tile.getBoundingClientRect();
-    const dx = cx - (r.left + r.width / 2), dy = cy - (r.top + r.height / 2);
-    if (Math.hypot(dx, dy) < 170) { active = true; pull(dx, dy); } else reset();
-  }, reset);
-  if (GHOST) demoTicks.push(now => {
-    if (active || !isVis(tile)) return;
-    const t = now / 1000;
-    pull(Math.cos(t * 1.1) * 110, Math.sin(t * 1.5) * 80);
-  });
-})();
-
-/* 03 — texte décodé */
+/* 06 — texte décodé */
 (() => {
   const tile = $('#d-scr'), el = $('#scr');
   const words = ['Mémorable', 'Fluide', 'Élégant', 'Vivant', 'Unique', 'Rapide'];
@@ -1031,7 +1178,7 @@ if (TOUCH) $$('[data-touch]').forEach(el => el.textContent = el.dataset.touch);
   demoTicks.push(now => { if (!RM && isVis(tile) && !busy && now - last > 2800) go(); });
 })();
 
-/* 04 — particules */
+/* 07 — particules */
 (() => {
   const tile = $('#d-part'), cv = $('canvas', tile), ctx = cv.getContext('2d');
   let W = 0, H = 0, P = [];
@@ -1075,7 +1222,7 @@ if (TOUCH) $$('[data-touch]').forEach(el => el.textContent = el.dataset.touch);
   });
 })();
 
-/* 05 — projecteur */
+/* 08 — projecteur */
 (() => {
   const tile = $('#d-spot'); let hover = false, tx = 0, ty = 0, cx = 0, cy = 0;
   vio.observe(tile);
@@ -1089,24 +1236,6 @@ if (TOUCH) $$('[data-touch]').forEach(el => el.textContent = el.dataset.touch);
   });
 })();
 
-/* 06 — formes liquides */
-(() => {
-  const tile = $('#d-goo'), blobs = $$('.blob', tile);
-  let hover = false, px = 0, py = 0, bx = 0, by = 0;
-  vio.observe(tile);
-  follow(tile, (x, y) => { const r = tile.getBoundingClientRect(); hover = true; px = x - r.left; py = y - r.top; }, () => hover = false);
-  demoTicks.push(now => {
-    if (!isVis(tile)) return;
-    const W = tile.clientWidth, H = tile.clientHeight, t = RM ? 0 : now / 1000;
-    const hx = hover ? px : W / 2 + Math.cos(t * .7) * 30, hy = hover ? py : H / 2 + Math.sin(t * .9) * 24;
-    bx = lerp(bx || W / 2, hx, .14); by = lerp(by || H / 2, hy, .14);
-    blobs.forEach((b, i) => {
-      let x = bx, y = by;
-      if (i) { const a = t * (.55 + i * .17) + i * 1.9; x = W / 2 + Math.cos(a) * W * (.1 + .05 * i); y = H / 2 + Math.sin(a * 1.3) * H * (.08 + .035 * i); }
-      b.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px)`;
-    });
-  });
-})();
 
 /* ==========================================================
    FORMULAIRE — envoi par FormSubmit (formsubmit.co) vers CONFIG.email

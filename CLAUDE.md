@@ -25,13 +25,13 @@ Le bloc `CONFIG`, en haut du `<script>` d'`index.html`, centralise `brand`, `ema
 5. **Savoir-faire** (`#savoir-faire`) : grille de tuiles (60 images/s, 3D, responsive, performance, référencement, sur-mesure).
 6. **Pourquoi un bon site** (`#impact`) : 3 chiffres sourcés (voir plus bas).
 7. **Marquee** : bandeau défilant infini qui s'incline et accélère selon la vitesse de scroll.
-8. **Démos** (`#demos`) : 6 effets interactifs (carte 3D, bouton magnétique, texte décodé, particules, projecteur, formes liquides).
+8. **Démos** (`#demos`) : deux groupes de 4. « Les essentiels » : galerie à glisser, avant / après, questions fréquentes, formulaire qui guide (démo, rien n'est envoyé). « Les effets qui marquent » : carte en relief 3D, texte décodé, particules « Bonjour », lumière sur la grille. Sur téléphone, les effets 3D suivent le doigt (événements touch passifs, via `follow()`) et s'animent seuls quand on ne les touche pas (`GHOST`). Les textes propres au tactile sont dans `data-touch`.
 9. **Process** (`#process`) : scroll horizontal épinglé en 4 étapes.
 10. **À propos** (`#a-propos`) : Quentin LUCAS, ingénieur informatique. Portrait avec les initiales QL, ou une photo via `CONFIG.photo`.
 11. **Contact** (`#contact`) : formulaire de demande de devis.
 12. **Footer** : lien vers `mentions-legales.html`.
 
-Une seule boucle `requestAnimationFrame` pilote tout : `scrollFx()` pour les sections liées au scroll, `demoTicks` pour les démos. Les éléments hors écran ne sont pas calculés (IntersectionObserver `vio`). Les éléments `.rv` apparaissent à l'entrée dans l'écran, et les `.count` sont des compteurs animés (attribut `data-dec` pour les décimales).
+Une seule boucle `requestAnimationFrame` pilote tout : `scrollFx()` pour les sections liées au scroll, `demoTicks` pour les effets 3D des démos (les 4 essentiels fonctionnent par événements). Les éléments hors écran ne sont pas calculés (IntersectionObserver `vio`). Les éléments `.rv` apparaissent à l'entrée dans l'écran, et les `.count` sont des compteurs animés (attribut `data-dec` pour les décimales).
 
 ## Formulaire de contact
 
