@@ -550,12 +550,12 @@ footer{background:#000;color:var(--ash);font-size:12px;line-height:16px;padding:
         <div class="demo rv" id="d-tilt">
           <div class="demo-top"><p class="demo-n">Démo 01</p><p class="demo-t">Carte en relief 3D</p></div>
           <div class="demo-stage"><div class="tilt-float"><div class="tilt-wrap"><div class="tilt-card"><span class="tc-chip">3D</span><div class="tc-orb"></div><div class="tc-name"><b data-cfg="brand">Studio QL</b><span>Profondeur &amp; reflet dynamique</span></div></div></div></div></div>
-          <p class="demo-hint"><span class="hint-dev">Survolez</span> la carte</p>
+          <p class="demo-hint" data-touch="Glissez le doigt sur la carte"><span class="hint-dev">Survolez</span> la carte</p>
         </div>
         <div class="demo rv" id="d-mag" style="--d:.08s">
           <div class="demo-top"><p class="demo-n">Démo 02</p><p class="demo-t">Bouton magnétique</p></div>
           <div class="demo-stage"><div class="mag-ring"></div><a class="mag pill-blue" href="#contact" id="magBtn"><span>Approchez</span></a></div>
-          <p class="demo-hint">Le bouton est attiré par le curseur</p>
+          <p class="demo-hint" data-touch="Le bouton suit votre doigt">Le bouton est attiré par le curseur</p>
         </div>
         <div class="demo rv" id="d-scr" style="--d:.16s">
           <div class="demo-top"><p class="demo-n">Démo 03</p><p class="demo-t">Texte décodé</p></div>
@@ -565,18 +565,18 @@ footer{background:#000;color:var(--ash);font-size:12px;line-height:16px;padding:
         <div class="demo rv" id="d-part">
           <canvas aria-hidden="true"></canvas>
           <div class="demo-top"><p class="demo-n">Démo 04</p><p class="demo-t">Particules réactives</p></div>
-          <p class="demo-hint">Passez dessus · cliquez pour disperser</p>
+          <p class="demo-hint" data-touch="Glissez le doigt · touchez pour disperser">Passez dessus · cliquez pour disperser</p>
         </div>
         <div class="demo rv" id="d-spot" style="--d:.08s">
           <div class="spot-soft"></div><div class="spot-grid"></div><div class="spot-glow"></div>
-          <div class="demo-top"><p class="demo-n">Démo 05</p><p class="demo-t">Lumière qui suit le curseur</p></div>
+          <div class="demo-top"><p class="demo-n">Démo 05</p><p class="demo-t" data-touch="Lumière qui suit le doigt">Lumière qui suit le curseur</p></div>
           <div class="demo-stage"><p class="spot-txt">Éclairez<br>la grille.</p></div>
-          <p class="demo-hint">La lumière suit votre pointeur</p>
+          <p class="demo-hint" data-touch="La lumière suit votre doigt">La lumière suit votre pointeur</p>
         </div>
         <div class="demo rv" id="d-goo" style="--d:.16s">
           <div class="goo"><span class="blob"></span><span class="blob"></span><span class="blob"></span><span class="blob"></span><span class="blob"></span></div>
           <div class="demo-top"><p class="demo-n">Démo 06</p><p class="demo-t">Formes liquides</p></div>
-          <p class="demo-hint">Attrapez la goutte blanche</p>
+          <p class="demo-hint" data-touch="Glissez le doigt pour attraper la goutte blanche">Attrapez la goutte blanche</p>
         </div>
       </div>
     </div>
@@ -945,31 +945,60 @@ const typer = (() => {
    ========================================================== */
 const demoTicks = [];
 
+/* Suivi du pointeur commun aux démos : souris, et doigt sur mobile.
+   Sur écran tactile, pointermove est annulé dès que le doigt fait défiler la page ;
+   les événements touch passifs, eux, continuent pendant le scroll sans le bloquer. */
+const follow = (tile, move, leave) => {
+  tile.addEventListener('pointermove', e => { if (e.pointerType !== 'touch') move(e.clientX, e.clientY); });
+  tile.addEventListener('pointerleave', e => { if (e.pointerType !== 'touch') leave(); });
+  const t = e => { const p = e.touches[0]; if (p) move(p.clientX, p.clientY); };
+  tile.addEventListener('touchstart', t, { passive: true });
+  tile.addEventListener('touchmove', t, { passive: true });
+  tile.addEventListener('touchend', leave, { passive: true });
+  tile.addEventListener('touchcancel', leave, { passive: true });
+};
+/* Pointeur fantôme : sur mobile, anime la démo tant qu'aucun doigt ne la touche */
+const GHOST = TOUCH && !RM;
+if (TOUCH) $$('[data-touch]').forEach(el => el.textContent = el.dataset.touch);
+
 /* 01 — carte 3D */
 (() => {
   const tile = $('#d-tilt'), card = $('.tilt-card', tile);
-  const move = e => {
-    const r = card.getBoundingClientRect();
-    const x = clamp((e.clientX - r.left) / r.width), y = clamp((e.clientY - r.top) / r.height);
+  let active = false;
+  vio.observe(tile);
+  const tilt = (x, y) => {
     card.classList.add('moving');
     card.style.transform = `rotateY(${(x - .5) * 30}deg) rotateX(${(.5 - y) * 30}deg)`;
     card.style.setProperty('--gx', x * 100 + '%'); card.style.setProperty('--gy', y * 100 + '%');
   };
-  tile.addEventListener('pointermove', move);
-  tile.addEventListener('pointerleave', () => { card.classList.remove('moving'); card.style.transform = ''; });
+  follow(tile, (cx, cy) => {
+    const r = card.getBoundingClientRect();
+    active = true; tilt(clamp((cx - r.left) / r.width), clamp((cy - r.top) / r.height));
+  }, () => { active = false; card.classList.remove('moving'); card.style.transform = ''; });
+  if (GHOST) demoTicks.push(now => {
+    if (active || !isVis(tile)) return;
+    const t = now / 1000;
+    tilt(.5 + Math.sin(t * .9) * .4, .5 + Math.cos(t * .7) * .35);
+  });
 })();
 
 /* 02 — bouton magnétique */
 (() => {
   const tile = $('#d-mag'), b = $('#magBtn'), s = $('span', b);
-  const reset = () => { b.classList.remove('moving'); b.style.transform = ''; s.style.transform = ''; };
-  tile.addEventListener('pointermove', e => {
+  let active = false;
+  vio.observe(tile);
+  const pull = (dx, dy) => { b.classList.add('moving'); b.style.transform = `translate(${dx * .42}px,${dy * .42}px)`; s.style.transform = `translate(${dx * .16}px,${dy * .16}px)`; };
+  const reset = () => { active = false; b.classList.remove('moving'); b.style.transform = ''; s.style.transform = ''; };
+  follow(tile, (cx, cy) => {
     const r = tile.getBoundingClientRect();
-    const dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2), d = Math.hypot(dx, dy);
-    if (d < 170) { b.classList.add('moving'); b.style.transform = `translate(${dx * .42}px,${dy * .42}px)`; s.style.transform = `translate(${dx * .16}px,${dy * .16}px)`; }
-    else reset();
+    const dx = cx - (r.left + r.width / 2), dy = cy - (r.top + r.height / 2);
+    if (Math.hypot(dx, dy) < 170) { active = true; pull(dx, dy); } else reset();
+  }, reset);
+  if (GHOST) demoTicks.push(now => {
+    if (active || !isVis(tile)) return;
+    const t = now / 1000;
+    pull(Math.cos(t * 1.1) * 110, Math.sin(t * 1.5) * 80);
   });
-  tile.addEventListener('pointerleave', reset);
 })();
 
 /* 03 — texte décodé */
@@ -1026,11 +1055,13 @@ const demoTicks = [];
   build();
   new ResizeObserver(build).observe(tile);
   if (document.fonts) document.fonts.ready.then(build);
-  tile.addEventListener('pointermove', e => { const r = tile.getBoundingClientRect(); ptr.x = e.clientX - r.left; ptr.y = e.clientY - r.top; });
-  tile.addEventListener('pointerleave', () => { ptr.x = ptr.y = -999; });
+  let active = false;
+  follow(tile, (cx, cy) => { const r = tile.getBoundingClientRect(); active = true; ptr.x = cx - r.left; ptr.y = cy - r.top; },
+    () => { active = false; ptr.x = ptr.y = -999; });
   tile.addEventListener('click', () => P.forEach(p => { p.vx += (Math.random() - .5) * 46; p.vy += (Math.random() - .5) * 46; }));
-  demoTicks.push(() => {
+  demoTicks.push(now => {
     if (!isVis(tile)) return;
+    if (GHOST && !active) { const t = now / 1000; ptr.x = W / 2 + Math.sin(t * .8) * W * .42; ptr.y = H / 2 + Math.sin(t * 1.9) * 26; }
     ctx.clearRect(0, 0, W, H);
     const R = 70, R2 = R * R;
     for (const p of P) {
@@ -1048,8 +1079,7 @@ const demoTicks = [];
 (() => {
   const tile = $('#d-spot'); let hover = false, tx = 0, ty = 0, cx = 0, cy = 0;
   vio.observe(tile);
-  tile.addEventListener('pointermove', e => { const r = tile.getBoundingClientRect(); hover = true; tx = e.clientX - r.left; ty = e.clientY - r.top; });
-  tile.addEventListener('pointerleave', () => hover = false);
+  follow(tile, (x, y) => { const r = tile.getBoundingClientRect(); hover = true; tx = x - r.left; ty = y - r.top; }, () => hover = false);
   demoTicks.push(now => {
     if (!isVis(tile)) return;
     const W = tile.clientWidth, H = tile.clientHeight;
@@ -1064,8 +1094,7 @@ const demoTicks = [];
   const tile = $('#d-goo'), blobs = $$('.blob', tile);
   let hover = false, px = 0, py = 0, bx = 0, by = 0;
   vio.observe(tile);
-  tile.addEventListener('pointermove', e => { const r = tile.getBoundingClientRect(); hover = true; px = e.clientX - r.left; py = e.clientY - r.top; });
-  tile.addEventListener('pointerleave', () => hover = false);
+  follow(tile, (x, y) => { const r = tile.getBoundingClientRect(); hover = true; px = x - r.left; py = y - r.top; }, () => hover = false);
   demoTicks.push(now => {
     if (!isVis(tile)) return;
     const W = tile.clientWidth, H = tile.clientHeight, t = RM ? 0 : now / 1000;
