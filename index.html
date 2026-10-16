@@ -114,45 +114,19 @@ button{font:inherit}
 /* ==========================================================
    DEVICE — scroll 3D
    ========================================================== */
-.device{height:340vh;position:relative;background:#000}
+.device{height:300vh;position:relative;background:#000}
 .sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .device-head{position:absolute;top:13vh;left:0;right:0;text-align:center;padding:0 16px;z-index:2;will-change:opacity,transform}
 .device-head .tech{margin-top:18px}
-.stage3d{perspective:1500px;width:100%;display:flex;justify-content:center}
-.screen{width:min(1000px,88vw,calc((100svh - 110px) * 1.6));aspect-ratio:16/10;border-radius:28px;background:var(--graphite);padding:clamp(6px,1vw,11px);box-shadow:0 0 0 1px var(--steel);transform-origin:50% 100%;will-change:transform;position:relative;transform:translateY(20vh) rotateX(32deg) scale(.72)}
-.screen::after{content:"";position:absolute;left:10%;right:10%;bottom:-40px;height:40px;background:radial-gradient(50% 100% at 50% 0,rgba(41,151,255,.18),transparent);pointer-events:none}
-.screen-in{width:100%;height:100%;border-radius:clamp(14px,1.8vw,20px);overflow:hidden;position:relative;background:#f4efe6;container-type:inline-size}
-
-/* --- mock : domaine viticole fictif --- */
-.mock{position:absolute;left:0;top:0;width:100%;will-change:transform;font-family:Georgia,"Times New Roman",serif;color:#2b2a26}
-.m-nav{height:7cqw;display:flex;align-items:center;justify-content:space-between;padding:0 4cqw;position:absolute;top:0;left:0;right:0;z-index:3;color:#fff;font-size:1.3cqw}
-.m-nav b{font-size:1.9cqw;font-style:italic;font-weight:400}
-.m-nav span{display:flex;gap:2.6cqw;font-family:var(--f-text);letter-spacing:0;opacity:.9}
-.m-hero{height:60cqw;position:relative;overflow:hidden;background:linear-gradient(#172440 0%,#6b3d55 38%,#c9694a 58%,#f2b86b 76%,#f6d79b 100%)}
-.m-sun{position:absolute;width:13cqw;height:13cqw;border-radius:50%;background:radial-gradient(#fff8e0,#ffd27a 55%,rgba(255,210,122,0) 72%);left:60%;top:24cqw}
-.m-hill{position:absolute;border-radius:50% 50% 0 0}
-.m-h1{left:-15%;right:-5%;bottom:14cqw;height:24cqw;background:#5b3b4f}
-.m-h2{left:-40%;right:30%;bottom:6cqw;height:22cqw;background:#3e2b3b}
-.m-h3{left:35%;right:-40%;bottom:5cqw;height:18cqw;background:#33263a}
-.m-rows{position:absolute;left:-30%;right:-30%;bottom:-2cqw;height:20cqw;background:repeating-linear-gradient(90deg,#1e2717 0 1.4cqw,#55652e 1.4cqw 3.6cqw);transform:perspective(18cqw) rotateX(58deg);transform-origin:50% 100%}
-.m-title{position:absolute;left:5cqw;top:14cqw;color:#fff;z-index:2}
-.m-title small{font-family:var(--f-text);font-size:1.1cqw;letter-spacing:.3em;text-transform:uppercase;opacity:.85}
-.m-title h3{font-size:6.2cqw;font-weight:400;font-style:italic;line-height:1.02;margin-top:1.2cqw;letter-spacing:-.01em}
-.m-btn{display:inline-block;margin-top:2.4cqw;font-family:var(--f-text);font-size:1.25cqw;padding:1.1cqw 2.2cqw;border-radius:5cqw;background:#fff;color:#2b2a26;letter-spacing:0}
-.m-sec{padding:6cqw 5cqw;background:#f4efe6}
-.m-sec small{font-family:var(--f-text);font-size:1.05cqw;letter-spacing:.3em;text-transform:uppercase;color:#8a7b62}
-.m-sec h4{font-size:3.6cqw;font-weight:400;font-style:italic;margin:1cqw 0 3.4cqw}
-.m-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:2cqw}
-.m-card{border-radius:1.6cqw;overflow:hidden;background:#fff}
-.m-card i{display:block;height:17cqw}
-.m-card:nth-child(1) i{background:radial-gradient(circle at 30% 40%,#8fa85a,#3f5a24 70%)}
-.m-card:nth-child(2) i{background:radial-gradient(circle at 40% 40%,#7b4a8c 0 10%,transparent 11%),radial-gradient(circle at 55% 55%,#5e3570 0 10%,transparent 11%),radial-gradient(circle at 45% 65%,#6d3f7e 0 10%,transparent 11%),radial-gradient(circle at 62% 38%,#7b4a8c 0 9%,transparent 10%),linear-gradient(#c9b48a,#a8915f)}
-.m-card:nth-child(3) i{background:linear-gradient(160deg,#f2c46b,#c27a2c)}
-.m-card p{padding:1.8cqw;font-family:var(--f-text);font-size:1.2cqw;line-height:1.5;letter-spacing:0;color:#5a5448}
-.m-card p b{display:block;font-family:Georgia,serif;font-style:italic;font-size:2cqw;font-weight:400;margin-bottom:.6cqw;color:#2b2a26}
-.m-quote{background:#2f3a25;color:#f4efe6;padding:9cqw 8cqw;text-align:center;font-size:3.4cqw;font-style:italic;line-height:1.25}
-.m-quote small{display:block;font-style:normal;font-family:var(--f-text);font-size:1.1cqw;letter-spacing:.3em;text-transform:uppercase;margin-top:2.4cqw;color:#a9b08f}
-.m-foot{background:#1f261a;color:#a9b08f;padding:3cqw 5cqw;font-family:var(--f-text);font-size:1.1cqw;display:flex;justify-content:space-between;letter-spacing:0}
+/* --- promesse : trois mots révélés au scroll --- */
+.pstage{position:absolute;inset:0;display:grid;place-items:center}
+.pglow{position:absolute;left:50%;top:52%;width:min(80vw,760px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;filter:blur(40px);opacity:0;will-change:opacity,transform;pointer-events:none}
+.pglow:nth-child(1){background:radial-gradient(circle,rgba(41,151,255,.45),transparent 62%)}
+.pglow:nth-child(2){background:radial-gradient(circle,rgba(255,138,76,.38),transparent 62%)}
+.pglow:nth-child(3){background:radial-gradient(circle,rgba(210,225,255,.30),transparent 62%)}
+.pw{position:absolute;left:0;right:0;top:50%;text-align:center;padding:0 16px;opacity:0;transform:translateY(-50%);will-change:transform,opacity,filter}
+.pw b{display:block;font-family:var(--f-disp);font-weight:600;font-size:clamp(64px,13vw,190px);line-height:1;letter-spacing:-.045em}
+.pw span{display:block;font-size:clamp(17px,1.8vw,24px);line-height:1.4;color:var(--ash);margin-top:22px;letter-spacing:.01em}
 
 /* ==========================================================
    MANIFESTE
@@ -453,44 +427,17 @@ footer{background:#000;color:var(--ash);font-size:12px;line-height:16px;padding:
 </section>
 
 <!-- ============ DEVICE 3D ============ -->
-<section class="device" id="device" aria-label="Exemple de site mis en scène">
+<section class="device" id="device" aria-label="Ma promesse">
   <div class="sticky">
     <div class="device-head" id="devHead">
-      <p class="eyebrow">Mise en scène</p>
-      <h2 class="h-xl">Votre site.<br>Présenté comme un objet d'exception.</h2>
-      <p class="tech"><i></i>Transformations 3D pilotées par le scroll · exemple fictif</p>
+      <p class="eyebrow">Ma promesse</p>
+      <p class="tech"><i></i>Typographie animée au scroll</p>
     </div>
-    <div class="stage3d">
-      <div class="screen" id="screen">
-        <div class="screen-in" id="screenIn">
-          <div class="mock" id="mock">
-            <div class="m-nav"><b>Domaine des Coteaux</b><span>Le domaine · Savoir-faire · Contact</span></div>
-            <div class="m-hero">
-              <div class="m-sun" data-depth=".35"></div>
-              <div class="m-hill m-h1" data-depth=".22"></div>
-              <div class="m-hill m-h2" data-depth=".12"></div>
-              <div class="m-hill m-h3" data-depth=".08"></div>
-              <div class="m-rows"></div>
-              <div class="m-title" data-depth=".3"><small>Entretien de vignes</small><h3>La vigne,<br>entre de bonnes mains.</h3><span class="m-btn">Demander un devis</span></div>
-            </div>
-            <div class="m-sec">
-              <small>Nos services</small>
-              <h4>Un travail précis, au fil des saisons.</h4>
-              <div class="m-cards">
-                <div class="m-card"><i></i><p><b>Taille &amp; palissage</b>De l'hiver au printemps, une vigne préparée avec soin.</p></div>
-                <div class="m-card"><i></i><p><b>Vendanges</b>Une équipe disponible au moment où le raisin est prêt.</p></div>
-                <div class="m-card"><i></i><p><b>Entretien des sols</b>Travail mécanique et suivi régulier des parcelles.</p></div>
-              </div>
-            </div>
-            <div class="m-quote">« Chaque rang raconte une année de travail. »<small>Domaine des Coteaux</small></div>
-            <div class="m-sec">
-              <small>Contact</small>
-              <h4>Parlons de vos parcelles.</h4>
-            </div>
-            <div class="m-foot"><span>© Domaine des Coteaux</span><span>Mentions légales</span></div>
-          </div>
-        </div>
-      </div>
+    <div class="pstage">
+      <div class="pglow"></div><div class="pglow"></div><div class="pglow"></div>
+      <p class="pw"><b>Clair.</b><span>Un message qui se comprend en un coup d'œil.</span></p>
+      <p class="pw"><b>Rapide.</b><span>Un site qui s'affiche en un instant.</span></p>
+      <p class="pw"><b>Mémorable.</b><span>Une impression qui reste.</span></p>
     </div>
   </div>
 </section>
@@ -884,8 +831,8 @@ void main(){
    ÉLÉMENTS PILOTÉS PAR LE SCROLL
    ========================================================== */
 const hero = $('#top'), heroCopy = $('#heroCopy'), lnav = $('#lnav');
-const dev = $('#device'), screen = $('#screen'), screenIn = $('#screenIn'), mock = $('#mock'), devHead = $('#devHead');
-const depthEls = $$('[data-depth]', mock);
+const dev = $('#device');
+const pWords = $$('.pw', dev), pGlows = $$('.pglow', dev);
 const mf = $('#manifesto'), mfText = $('#mfText');
 mfText.innerHTML = mfText.textContent.trim().split(/\s+/).map(w => `<span>${w}</span>`).join(' ');
 const words = $$('span', mfText);
@@ -917,15 +864,17 @@ function scrollFx(now) {
   // device
   { const { r, p } = secProgress(dev);
     if (r.bottom > 0 && r.top < vh) {
-      const e = easeOut(clamp(p / .42));
-      screen.style.transform = `translateY(${(1 - e) * 20}vh) rotateX(${(1 - e) * 32}deg) scale(${.72 + .28 * e})`;
-      const ho = clamp(p / .2);
-      devHead.style.opacity = 1 - ho;
-      devHead.style.transform = `translateY(${-ho * 60}px)`;
-      const max = mock.offsetHeight - screenIn.clientHeight;
-      const q = easeInOut(clamp((p - .45) / .5));
-      mock.style.transform = `translateY(${-q * max}px)`;
-      depthEls.forEach(l => l.style.transform = `translateY(${q * max * l.dataset.depth}px)`);
+      // chaque mot occupe un tiers du défilement : apparition, pause, disparition (le dernier reste)
+      pWords.forEach((w, i) => {
+        const t = (p - .04) / .9 * pWords.length - i, last = i === pWords.length - 1;
+        const tin = clamp(t * 3.5), tout = last ? 0 : clamp((t - .72) * 3.5);
+        const o = RM ? (Math.floor(clamp(p * 3, 0, 2.999)) === i ? 1 : 0) : tin * (1 - tout);
+        w.style.opacity = o.toFixed(3);
+        w.style.transform = `translateY(calc(-50% + ${((1 - tin) * 50 - tout * 50).toFixed(1)}px)) scale(${(.96 + .04 * tin).toFixed(3)})`;
+        w.style.filter = o > .98 ? 'none' : `blur(${((1 - o) * 8).toFixed(1)}px)`;
+        pGlows[i].style.opacity = (o * .9).toFixed(3);
+        pGlows[i].style.transform = `translate(-50%,-50%) scale(${(.7 + .4 * clamp(t)).toFixed(3)})`;
+      });
     } }
 
   // manifeste
